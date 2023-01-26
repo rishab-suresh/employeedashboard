@@ -1,0 +1,94 @@
+.main {
+  margin: 2px;
+  background-color: white;
+  width: 90%;
+  margin: 30px;
+  margin-left: 30px;
+  border-radius: 5px;
+  height: 60vh;
+  
+}
+
+.container-bio {
+    margin: 10px;
+  background-color: aliceblue;
+  padding: 2px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  box-shadow: 20px, 10px, 20px, #302e2e;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  border-width: 2px;
+  border-radius: 3px;
+}
+.name{
+    display: flex;
+    align-items: center;
+}
+
+.status-toggle {
+    margin: 10px;
+  background-color: aliceblue;
+ 
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.checkbox{
+    display: flex;
+    flex-direction: row;
+}
+.current-container{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.current-status{
+    margin-top: 30px;
+    border-radius: 5px;
+    background-color: #dedbdb;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: #302e2e;
+
+}
+.logout-button{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+.logout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    border-radius: 6px;
+    border: none;
+    background: #6E6D70;
+    box-shadow: 0px 0.5px 1px rgb(0 0 0 / 10%), inset 0px 0.5px 0.5px rgb(255 255 255 / 50%), 0px 0px 0px 0.5px rgb(0 0 0 / 12%);
+    color: #DFDEDF;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.logout:hover{
+    background-color: #c87979;
+    padding: 7px 18px;
+    transition: ease-out 300ms;
+}
