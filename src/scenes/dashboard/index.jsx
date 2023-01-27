@@ -25,8 +25,9 @@ export const Dashboard = () => {
   const [meetingStarted, setMeetingStarted] = useState(false);
   const [breakStart, setBreakStart] = useState(0);
   const [breaktimeStart, setBreakTimeStart] = useState(false);
+  const [breakReason, setBreakReason] = useState([]);
 
-  let newMeetingRef = null;
+
 
   useEffect(() => {
     onValue(ref(db, `users/${userId}`), (snapshot) => {
@@ -56,7 +57,6 @@ export const Dashboard = () => {
     );
   }, [userId, currentDate]);
 
-
   function handleChange(field, value) {
     set(
       ref(db, `users/${userId}/Activity/${currentDate}/Status/${field}`),
@@ -67,6 +67,7 @@ export const Dashboard = () => {
       value ? "0" : "1"
     );
   }
+
   function handleMeetingStart() {
     const meetingReason = document.getElementById("meeting-reason").value;
     let meetingStart = moment().format("HHmm");
@@ -75,6 +76,13 @@ export const Dashboard = () => {
       ref(db, `users/${userId}/Activity/${currentDate}/meetings`),
       (snapshot) => {
         let data = snapshot.val();
+        if (!data) {
+          data = {};
+        }
+        if (!("meetings" in data)) {
+          data["meetings"] = {};
+        }
+
         console.log(data);
         let newMeeting = { meeting_start: meetingStart, remark: meetingReason };
         let meetingCount = Object.keys(data).length + 1;
@@ -140,13 +148,19 @@ export const Dashboard = () => {
     setIsMeetingOn(false);
   }
   function handleBreakStart() {
-    const breakReason = document.getElementById("break-reason").value;
+    const breakReason = document.querySelector(
+      'input[name="break-reason"]:checked'
+    ).value;
     let breakStart = moment().format("HHmm");
     setBreakStart(parseInt(moment().format("HHmm")));
     onValue(
       ref(db, `users/${userId}/Activity/${currentDate}/breaks`),
       (snapshot) => {
-        let data = snapshot.val();
+        let data = snapshot.val() || {};
+        if (!("breaks" in data)) {
+          data["breaks"] = {};
+        }
+
         console.log(data);
         let newBreak = { break_start: breakStart, remark: breakReason };
         let breakCount = Object.keys(data).length + 1;
@@ -222,14 +236,14 @@ export const Dashboard = () => {
     currentStatus = "Idle";
   }
 
-  function logout (){
+  function logout() {
     set(ref(db, `users/${userId}/Activity/${currentDate}/Status`), {
       Break: "0",
       Meeting: "0",
       OnMail: "0",
       Idle: "1",
     });
-    navigate("/")
+    navigate("/");
   }
   return (
     <div className="main">
@@ -273,6 +287,7 @@ export const Dashboard = () => {
                   <>
                     <label className="checkbox">
                       <input
+                        name="break-reason"
                         id="break-reason"
                         type="checkbox"
                         defaultChecked={false}
@@ -281,6 +296,7 @@ export const Dashboard = () => {
                     </label>
                     <label className="checkbox">
                       <input
+                        name="break-reason"
                         id="break-reason"
                         type="checkbox"
                         defaultChecked={false}
@@ -335,7 +351,9 @@ export const Dashboard = () => {
           </div>
         </div>
         <div className="logout-button">
-          <button className="logout" onClick={logout}>Logout</button>
+          <button className="logout" onClick={logout}>
+            Logout
+          </button>
         </div>
       </div>
     </div>
