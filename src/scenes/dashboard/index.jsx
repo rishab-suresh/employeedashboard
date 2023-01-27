@@ -304,7 +304,7 @@ export const Dashboard = () => {
                       Snack Break
                     </label>
 
-                    <button onClick={handleBreakStart}>Start Break</button>
+                    <button onClick={handleBreakStart} className="breakstart">Start Break</button>
                   </>
                 )}
               </div>
@@ -328,7 +328,7 @@ export const Dashboard = () => {
                       id="meeting-reason"
                       placeholder="Enter the reason for the meeting"
                     />
-                    <button onClick={handleMeetingStart}>Start Meeting</button>
+                    <button onClick={handleMeetingStart} className="breakstart">Start Meeting</button>
                   </>
                 )}
               </div>
