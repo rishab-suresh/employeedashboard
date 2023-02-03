@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../../firebaseconfig";
-import { onValue, push, ref, set, once } from "firebase/database";
+import { onValue, push, ref, set, once, update } from "firebase/database";
 import { useState, useEffect } from "react";
 import ReactSwitch from "react-switch";
 import moment from "moment";
@@ -26,8 +26,6 @@ export const Dashboard = () => {
   const [breakStart, setBreakStart] = useState(0);
   const [breaktimeStart, setBreakTimeStart] = useState(false);
   const [breakReason, setBreakReason] = useState([]);
-
-
 
   useEffect(() => {
     onValue(ref(db, `users/${userId}`), (snapshot) => {
@@ -148,9 +146,9 @@ export const Dashboard = () => {
     setIsMeetingOn(false);
   }
   function handleBreakStart() {
-    const breakReason = document.querySelector(
-      'input[name="break-reason"]:checked'
-    ).value;
+    const breakReason = document
+      .querySelector('input[name="break-reason"]:checked')
+      .getAttribute("value");
     let breakStart = moment().format("HHmm");
     setBreakStart(parseInt(moment().format("HHmm")));
     onValue(
@@ -242,7 +240,8 @@ export const Dashboard = () => {
       Meeting: "0",
       OnMail: "0",
       Idle: "1",
-    });
+    }).then(set(ref(db, `users/${userId}/Login`), "No"));
+
     navigate("/");
   }
   return (
@@ -304,7 +303,9 @@ export const Dashboard = () => {
                       Snack Break
                     </label>
 
-                    <button onClick={handleBreakStart} className="breakstart">Start Break</button>
+                    <button onClick={handleBreakStart} className="breakstart">
+                      Start Break
+                    </button>
                   </>
                 )}
               </div>
@@ -328,7 +329,9 @@ export const Dashboard = () => {
                       id="meeting-reason"
                       placeholder="Enter the reason for the meeting"
                     />
-                    <button onClick={handleMeetingStart} className="breakstart">Start Meeting</button>
+                    <button onClick={handleMeetingStart} className="breakstart">
+                      Start Meeting
+                    </button>
                   </>
                 )}
               </div>

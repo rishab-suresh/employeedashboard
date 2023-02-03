@@ -1,13 +1,15 @@
 import React from "react";
 
-import { onValue, ref } from "firebase/database";
+import { onValue, ref, set } from "firebase/database";
 import { db } from "../../firebaseconfig";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
+import moment from "moment";
 export const Login = () => {
   const [users, setUsers] = useState([]);
   const [employeeId, setEmployeeId] = useState();
+  const currentDate = moment().format("DD MMM YYYY")
   const navigate = useNavigate();
   useEffect(() => {
     onValue(ref(db, "users"), (snapshot) => {
@@ -29,6 +31,8 @@ export const Login = () => {
       if (users[i].EmpID === employeeId) {
         // Use the corresponding user ID to navigate to the Dashboard component
         const { Name, EmpID, userId } = users[i];
+        set(ref(db,`users/${userId}/Login`),"Yes")
+        set(ref(db,`users/${userId}/Activity/${currentDate}/Login`),moment().format("HHmm"))
         const dashboardUrl = `/Dashboard/${Name}/${EmpID}/${userId}`;
         navigate(dashboardUrl, { state: { Name, EmpID, userId } });
         return;
