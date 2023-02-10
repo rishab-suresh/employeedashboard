@@ -240,7 +240,13 @@ export const Dashboard = () => {
       Meeting: "0",
       OnMail: "0",
       Idle: "1",
-    }).then(set(ref(db, `users/${userId}/Login`), "No"));
+    })
+      .then(set(ref(db, `users/${userId}/Login`), "No"))
+      .then(
+        set(ref(db, `users/${userId}/Activity/${currentDate}/LogoutTime`), {
+          LogoutTime: moment().format("HHmm"),
+        })
+      );
 
     navigate("/");
   }

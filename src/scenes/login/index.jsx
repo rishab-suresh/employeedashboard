@@ -33,7 +33,7 @@ export const Login = () => {
         const { Name, EmpID, userId } = users[i];
         set(ref(db,`users/${userId}/Login`),"Yes")
         set(ref(db,`users/${userId}/Activity/${currentDate}/Login`),moment().format("HHmm"))
-        const dashboardUrl = `/Dashboard/${Name}/${EmpID}/${userId}`;
+        const dashboardUrl = `/Dashboard/${Name}/${EmpID}/${userId}`
         navigate(dashboardUrl, { state: { Name, EmpID, userId } });
         return;
       }
